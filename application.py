@@ -153,7 +153,7 @@ if selected=="Clustering":
         ##### Netoyage de données
         st.write(""" ### Data preporcessing 
         """)
-        st.info("The idea of this part of this widget bellow is to delete the missing value to can use method of clustering, and delete some attributes like: (class, id...)")
+        st.info("The idea of this part of this widget bellow is to delete the missing value to can use method of clustering, and delete some attributes like: (class, id...) who should not participate when applying the method")
         if st.checkbox("Drop missing Value"):
             df= df.dropna()
             st.success(df.shape)
@@ -192,12 +192,12 @@ if selected=="Clustering":
                 u_labels = np.unique(label)
                 #plotting the results:
                 if st.checkbox("Show the plot"):
-                    fig=plt.figure(figsize=(4,4))
+                    fig=plt.figure(figsize=(3,3))
                     for i in u_labels:
                         plt.scatter(x[label == i , 0] , x[label == i , 1] , label = i)
                         st.set_option('deprecation.showPyplotGlobalUse', False)
 
-                    plt.scatter(centroids[:,index_no[0]] , centroids[:,index_no[1]] , s = 80, color = 'k')
+                    plt.scatter(centroids[:,index_no[0]] , centroids[:,index_no[1]] , s = 50, color = 'k')
                     plt.legend()
                     plt.show()
                     st.pyplot(fig)
@@ -227,12 +227,12 @@ if selected=="Clustering":
                 x=x.to_numpy()
                 outliers = DBSCAN_dataset[DBSCAN_dataset['Cluster']==-1]
                 fig2,axes = plt.subplots()
-                sns.scatterplot(a, b,data=DBSCAN_dataset[DBSCAN_dataset['Cluster']!=-1],hue='Cluster', ax=axes, palette='Set2', legend='full', s=200)
+                sns.scatterplot(a, b,data=DBSCAN_dataset[DBSCAN_dataset['Cluster']!=-1],hue='Cluster', ax=axes, palette='Set2', legend='full', s=130)
                 st.set_option('deprecation.showPyplotGlobalUse', False)
                 axes.scatter(outliers[a], outliers[b], s=10, label='outliers', c="k")
                 st.set_option('deprecation.showPyplotGlobalUse', False)
                 axes.legend()
-                plt.setp(axes.get_legend().get_texts(), fontsize='12')
+                plt.setp(axes.get_legend().get_texts(), fontsize='8')
                 plt.show()
                 st.pyplot(fig2)
 
