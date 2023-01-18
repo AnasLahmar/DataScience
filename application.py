@@ -197,7 +197,7 @@ if selected=="Clustering":
                         plt.scatter(x[label == i , 0] , x[label == i , 1] , label = i)
                         st.set_option('deprecation.showPyplotGlobalUse', False)
 
-                    plt.scatter(centroids[:,index_no[0]] , centroids[:,index_no[1]] , s = 50, color = 'k')
+                    plt.scatter(centroids[:,index_no[0]] , centroids[:,index_no[1]] , s = 80, color = 'k')
                     plt.legend()
                     plt.show()
                     st.pyplot(fig)
@@ -227,7 +227,7 @@ if selected=="Clustering":
                 x=x.to_numpy()
                 outliers = DBSCAN_dataset[DBSCAN_dataset['Cluster']==-1]
                 fig2,axes = plt.subplots()
-                sns.scatterplot(a, b,data=DBSCAN_dataset[DBSCAN_dataset['Cluster']!=-1],hue='Cluster', ax=axes, palette='Set2', legend='full', s=130)
+                sns.scatterplot(a, b,data=DBSCAN_dataset[DBSCAN_dataset['Cluster']!=-1],hue='Cluster', ax=axes, palette='Set2', legend='full', s=200)
                 st.set_option('deprecation.showPyplotGlobalUse', False)
                 axes.scatter(outliers[a], outliers[b], s=10, label='outliers', c="k")
                 st.set_option('deprecation.showPyplotGlobalUse', False)
