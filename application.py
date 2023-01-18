@@ -78,7 +78,7 @@ if selected=="Data Overview":
         data.to_csv('data.csv', index=False)
         st.success("Dataset has selected successfully")
          ##### Encodding
-        st.info("Data it will be Encoded if it contains nominal values")
+        st.info("An attribut will be Encoded if it contains nominal values")
         df=all.encoder(data)
         if st.checkbox("Discover your Data") :
             st.write(""" ## Discover your Data :""")
