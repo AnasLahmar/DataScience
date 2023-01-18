@@ -88,7 +88,7 @@ if selected=="Data Overview":
                 st.write(data.head(5))
             if radiodicover=="After encoding":
                 st.write(""" ### Results : """)
-                st.write(df.head(5))
+                st.write(df.head())
             if radiodicover=="Shape":
                 st.write(""" ### Results : """)
                 st.success(data.shape)
