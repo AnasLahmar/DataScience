@@ -23,7 +23,7 @@ def confusion(y_test, y_pred):
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.pyplot(fig)
 # Interface
-st.title("Extraction de connaissances")
+st.title("Extraction de connaissances: Clustering")
 
 selected=option_menu(
     menu_title="Main Menu",
