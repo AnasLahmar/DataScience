@@ -153,7 +153,7 @@ if selected=="Clustering":
         ##### Netoyage de données
         st.write(""" ### Data preporcessing 
         """)
-        st.info("The idea of this part of this widget bellow is to delete the missing value to can use method of clustering, and delete some attributes like: (class, id...) who should not participate when applying the method")")
+        st.info("The idea of this part of this widget bellow is to delete the missing value to can use method of clustering, and delete some attributes like: (class, id...) who should not participate when applying the method")
         if st.checkbox("Drop missing Value"):
             df= df.dropna()
             st.success(df.shape)
