@@ -85,10 +85,10 @@ if selected=="Data Overview":
             radiodicover=st.radio("",("Before encoding","After encoding","Shape","Description","Missing Value"))
             if radiodicover=="Before encoding":
                 st.write(""" ### Results : """)
-                st.success(data.head(5))
+                st.write(data.head(5))
             if radiodicover=="After encoding":
                 st.write(""" ### Results : """)
-                st.success(df.head(5))
+                st.write(df.head(5))
             if radiodicover=="Shape":
                 st.write(""" ### Results : """)
                 st.success(data.shape)
