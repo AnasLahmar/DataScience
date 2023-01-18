@@ -5,7 +5,9 @@ from streamlit_option_menu import option_menu
 import matplotlib.pyplot as plt
 import numpy as np 
 import pandas as pd 
+import seaborn as sns
 from sklearn.cluster import KMeans
+from sklearn.cluster import DBSCAN
 from sklearn.metrics import accuracy_score
 import allfunction as all
 
@@ -144,7 +146,10 @@ if selected=="Clustering":
         ##### Netoyage de données
         st.write(""" ### Data preporcessing 
         """)
-        st.info("The idea of this part of this widget bellow is to delete some attrunutes like: (the classes, id...), and drop also missing value ")
+        st.info("The idea of this part of this widget bellow is to delete the missing value to can use method of clustering, and delete some attributes like: (class, id...)")
+        if st.checkbox("Drop missing Value"):
+            df= df.dropna()
+            st.success(df.shape)
         if st.checkbox("Drop columns"):
             supprimer=st.multiselect('Select the attrubuts to drop from the data',df.columns)
             if supprimer:
@@ -152,11 +157,7 @@ if selected=="Clustering":
                 if st.checkbox("Show the Data after droping the attrubuts wanted"):
                     st.success(df.shape)
                     st.write(df)
-        if st.checkbox("Drop missing Value"):
-            df= df.dropna()
-            st.success(df.shape)
         #####
-
         #### Algorithms  
         st.write(""" ### Clustering
         """)      
@@ -179,7 +180,8 @@ if selected=="Clustering":
                 x=pd.DataFrame([df[a], df[b]]).transpose()
                 x=x.to_numpy()
                 #Getting unique labels
-                #centroids = model.cluster_centers_ 
+                centroids = model.cluster_centers_ 
+                index_no = [df.columns.get_loc(a),df.columns.get_loc(b)]
                 u_labels = np.unique(label)
                 #plotting the results:
                 if st.checkbox("Show the plot"):
@@ -188,7 +190,7 @@ if selected=="Clustering":
                         plt.scatter(x[label == i , 0] , x[label == i , 1] , label = i)
                         st.set_option('deprecation.showPyplotGlobalUse', False)
 
-                    #plt.scatter(centroids[:,1] , centroids[:,2] , s = 80, color = 'k')
+                    plt.scatter(centroids[:,index_no[0]] , centroids[:,index_no[1]] , s = 80, color = 'k')
                     plt.legend()
                     plt.show()
                     st.pyplot(fig)
@@ -196,7 +198,38 @@ if selected=="Clustering":
             
         if algorithm=="DBSCAN":
             # instantiate classifier with default hyperparameters
-            st.write(''' ''')
+            st.write(""" ### Choise the parameteres
+            """)
+            eps = st.slider("eps (rayon): ", 0.0,10.0 , 0.3)
+            min_samples = st.slider("min_samples : ", 1, 15, 3)
+            clustering = DBSCAN(eps=eps, min_samples=min_samples).fit(df)
+            DBSCAN_dataset = df.copy()
+            DBSCAN_dataset.loc[:,'Cluster'] = clustering.labels_ 
+            labels=clustering.labels_ 
+            n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0) # Number of clusters
+            
+            if st.checkbox("Show clusters"):
+                st.info("If the cluster '-1' exists that refers to the outliers that DBSCAN methods can not classify them")
+                st.info("We can change the parameters of 'eps' and 'min_samples' to change the number of clusters")
+                st.write(DBSCAN_dataset.Cluster.value_counts().to_frame())
+                st.success("The number of clusters is : {}".format(n_clusters_))
+            if st.checkbox("Show the results"):
+                a=st.selectbox("X:",df.columns)
+                b=st.selectbox("Y:",df.columns)
+                x=pd.DataFrame([df[a], df[b]]).transpose()
+                x=x.to_numpy()
+                outliers = DBSCAN_dataset[DBSCAN_dataset['Cluster']==-1]
+                fig2,axes = plt.subplots()
+                sns.scatterplot(a, b,data=DBSCAN_dataset[DBSCAN_dataset['Cluster']!=-1],hue='Cluster', ax=axes, palette='Set2', legend='full', s=200)
+                st.set_option('deprecation.showPyplotGlobalUse', False)
+                axes.scatter(outliers[a], outliers[b], s=10, label='outliers', c="k")
+                st.set_option('deprecation.showPyplotGlobalUse', False)
+                axes.legend()
+                plt.setp(axes.get_legend().get_texts(), fontsize='12')
+                plt.show()
+                st.pyplot(fig2)
+
+
             
 
     else:
