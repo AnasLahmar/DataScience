@@ -85,10 +85,10 @@ if selected=="Data Overview":
             radiodicover=st.radio("",("Before encoding","After encoding","Shape","Description","Missing Value"))
             if radiodicover=="Before encoding":
                 st.write(""" ### Results : """)
-                st.write(data.head())
+                st.write(data.head(data.shape[0]))
             if radiodicover=="After encoding":
                 st.write(""" ### Results : """)
-                st.write(df.head())
+                st.write(df.head(data.shape[0]))
             if radiodicover=="Shape":
                 st.write(""" ### Results : """)
                 st.success(data.shape)
@@ -158,7 +158,7 @@ if selected=="Clustering":
             df= df.dropna()
             st.success(df.shape)
         if st.checkbox("Drop columns"):
-            supprimer=st.multiselect('Select the attrubuts to drop from the data',df.columns)
+            supprimer=st.multiselect('Select the attribute(s) to drop from the data',df.columns)
             if supprimer:
                 df = df.drop(supprimer, axis=1)
                 if st.checkbox("Show the Data after droping the attrubuts wanted"):
