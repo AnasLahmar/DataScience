@@ -78,11 +78,17 @@ if selected=="Data Overview":
         data.to_csv('data.csv', index=False)
         st.success("Dataset has selected successfully")
          ##### Encodding
-        st.info("An attribut will be Encoded if it contains nominal values")
+        st.info("An attribute will be Encoded if it contains nominal values")
         df=all.encoder(data)
         if st.checkbox("Discover your Data") :
             st.write(""" ## Discover your Data :""")
-            radiodicover=st.radio("",("Shape","Description","Missing Value"))
+            radiodicover=st.radio("",("Before encoding","After encoding","Shape","Description","Missing Value"))
+            if radiodicover=="Before encoding":
+                st.write(""" ### Results : """)
+                st.success(data.head(5))
+            if radiodicover=="After encoding":
+                st.write(""" ### Results : """)
+                st.success(df.head(5))
             if radiodicover=="Shape":
                 st.write(""" ### Results : """)
                 st.success(data.shape)
@@ -97,13 +103,14 @@ if selected=="Data Overview":
             if radio_vis=="Heat Map":
                 data=pd.read_csv("data.csv")
                 fig, ax = plt.subplots()
-                heatmap = sns.heatmap(data.corr(), vmin=-1, vmax=1, annot=True)
+                heatmap = sns.heatmap(df.corr(), vmin=-1, vmax=1, annot=True)
                 heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':12}, pad=12)
                 st.pyplot(fig)
             if radio_vis=="Plot":
                 data=pd.read_csv("data.csv")
-                df=data.select_dtypes(include='number')
-                st.write(data.shape)
+                df=all.encoder(data)
+                df=df.select_dtypes(include='number')
+                st.write(df.shape)
                 st.write("""## Visualize the relation between data variables """)
                 st.write("""### X_features """)
                 x=st.selectbox("Variables !",df.columns)
