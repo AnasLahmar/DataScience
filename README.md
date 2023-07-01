@@ -1,6 +1,5 @@
 # Introduction à la Data Science
-## Bureau d'étude 2
-## Réalisé par : Lamyae Khmilech & Anas Lahmar 
+## Bureau d'étude 1
 # Exécution de l'application
 En commande terminal :
 ```
